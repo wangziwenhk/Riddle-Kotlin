@@ -15,6 +15,13 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         return 0
     }
 
+    override fun visitStatment(ctx: RiddleParser.StatmentContext?): Any? {
+        val result = super.visitStatment(ctx)
+//        ObjectManager.printAllObject()
+//        println()
+        return result
+    }
+
     //整数判断
     override fun visitIntLiteral(ctx: RiddleParser.IntLiteralContext?): Int {
         val str = ctx!!.children[0].toString().toCharArray()
@@ -168,8 +175,6 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
                 i++
             }
         }
-        ObjectManager.printAllObject()
-        println()
         return Any()
     }
 
@@ -179,11 +184,10 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         val value = visit(ctx.children[2])
 
         ObjectManager.setValue(name, value)
-        ObjectManager.printAllObject()
         return 0
     }
 
-    override fun visitBlock(ctx: RiddleParser.BlockContext?): Any {
+    override fun visitBlock(ctx: RiddleParser.BlockContext?): Any? {
         ObjectManager.inSpace()
         val result = visitChildren(ctx)
         ObjectManager.outSpace()
