@@ -28,6 +28,24 @@ public interface RiddleParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVariableDefine(RiddleParser.VariableDefineContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RiddleParser#ifExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIfExpression(RiddleParser.IfExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#funcDefine}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncDefine(RiddleParser.FuncDefineContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#funcBody}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitFuncBody(RiddleParser.FuncBodyContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RiddleParser#block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

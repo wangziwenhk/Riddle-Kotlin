@@ -37,6 +37,36 @@ public interface RiddleParserListener extends ParseTreeListener {
 	 */
 	void exitVariableDefine(RiddleParser.VariableDefineContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RiddleParser#ifExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfExpression(RiddleParser.IfExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#ifExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfExpression(RiddleParser.IfExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#funcDefine}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncDefine(RiddleParser.FuncDefineContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#funcDefine}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncDefine(RiddleParser.FuncDefineContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#funcBody}.
+	 * @param ctx the parse tree
+	 */
+	void enterFuncBody(RiddleParser.FuncBodyContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#funcBody}.
+	 * @param ctx the parse tree
+	 */
+	void exitFuncBody(RiddleParser.FuncBodyContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RiddleParser#block}.
 	 * @param ctx the parse tree
 	 */

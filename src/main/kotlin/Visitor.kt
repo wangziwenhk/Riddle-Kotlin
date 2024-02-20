@@ -161,7 +161,7 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
 
         var i = 1
         while (i < newCtx.size) {
-            if (i<newCtx.size-1 && newCtx[i + 1].toString() == "=") {
+            if (i < newCtx.size - 1 && newCtx[i + 1].toString() == "=") {
                 val name = newCtx[i].toString()
                 val type = newCtx[i + 2]::class.simpleName.toString()
                 val value = newCtx[i + 2]
@@ -169,12 +169,13 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
                 i += 3
             } else if (newCtx[i].toString() != ",") {
                 val name = newCtx[i].toString()
-                ObjectManager.defineObject(name, isConst=isConst)
+                ObjectManager.defineObject(name, isConst = isConst)
                 i++
             } else {
                 i++
             }
         }
+        ObjectManager.printAllObject()
         return Any()
     }
 
@@ -192,5 +193,16 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         val result = visitChildren(ctx)
         ObjectManager.outSpace()
         return result
+    }
+
+    override fun visitIfExpression(ctx: RiddleParser.IfExpressionContext?): Any {
+        val condition = visit(ctx!!.children[2])
+        return if(condition == true)
+            visit(ctx.children[4])
+        else{
+            if(ctx.childCount == 7)
+                visit(ctx.children[6])
+            else Void()
+        }
     }
 }

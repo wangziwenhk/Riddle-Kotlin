@@ -3,6 +3,9 @@ lexer grammar RiddleLexer;
 //关键字
 Var : 'var' ;
 Val : 'val' ;
+Fun : 'fun' ;
+If : 'if' ;
+Else : 'else' ;
 
 //符号
 LeftParen: '(';

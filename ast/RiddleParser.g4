@@ -10,10 +10,26 @@ statment
     : variableDefine Semi
     | primaryExpression Semi
     | block
+    | funcDefine
     ;
 
 variableDefine
     : (Var | Val) (Identfier(Assign primaryExpression)?) (Comma (Identfier(Assign primaryExpression)?))*
+    ;
+
+ifExpression
+    : If LeftParen primaryExpression RightParen (block | statment)
+      (Else (block | statment))?
+    ;
+
+//todo 完成funcDefine的传参处理
+funcDefine
+    : Fun Identfier LeftParen RightParen funcBody
+    ;
+
+//这里funcBody还需要额外处理return
+funcBody
+    : LeftBrace statment* RightBrace
     ;
 
 block
@@ -26,6 +42,7 @@ primaryExpression
     : literal
     | idExpression
     | assignExpression
+    | ifExpression
     ;
 
 
@@ -35,7 +52,6 @@ assignExpression
 
 idExpression
     : Identfier
-    | Identfier (Dot Identfier)
     ;
 
 //字面量

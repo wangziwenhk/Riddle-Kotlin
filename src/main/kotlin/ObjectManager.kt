@@ -19,7 +19,7 @@ class ObjectManager {
             return objects[uuids[name]!!.peek()]!!
         }
 
-        fun defineObject(name: String, type: String = "UnKnow", value: Any = 0, isConst: Boolean = false) {
+        fun defineObject(name: String, type: String = "UnKnow", value: Any = Void(), isConst: Boolean = false) {
             if (newDefined.peek().contains(name)) {
                 throw DuplicateElementException("The Identifier \"$name\" does defined")
             }
