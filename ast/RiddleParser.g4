@@ -3,23 +3,39 @@ options {
     tokenVocab = RiddleLexer;
 }
 program
-    : statment*
+    : statment* EOF
     ;
 
 statment
-    : variableDefine Semi
-    | primaryExpression Semi
+    : variableDefine LineBreak
+    | primaryExpression LineBreak
     | block
     | funcDefine
+    | while
+    | Semi
+    | LineBreak
     ;
+
+//既是表达式也是语句
+primaryExpression
+    : literal
+    | idExpression
+    | assignExpression
+    | ifExpression
+    ;
+
 
 variableDefine
     : (Var | Val) (Identfier(Assign primaryExpression)?) (Comma (Identfier(Assign primaryExpression)?))*
     ;
 
 ifExpression
-    : If LeftParen primaryExpression RightParen (block | statment)
-      (Else (block | statment))?
+    : If LeftParen primaryExpression RightParen statment
+      (Else statment)?
+    ;
+
+while
+    : While LeftParen primaryExpression RightParen statment
     ;
 
 //todo 完成funcDefine的传参处理
@@ -37,13 +53,7 @@ block
     ;
 
 
-//既是表达式也是语句
-primaryExpression
-    : literal
-    | idExpression
-    | assignExpression
-    | ifExpression
-    ;
+
 
 
 assignExpression

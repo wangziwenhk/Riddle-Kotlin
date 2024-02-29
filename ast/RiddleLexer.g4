@@ -6,6 +6,9 @@ Val : 'val' ;
 Fun : 'fun' ;
 If : 'if' ;
 Else : 'else' ;
+While : 'while' ;
+
+LineBreak : '\n' ;
 
 //符号
 LeftParen: '(';

@@ -197,12 +197,27 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
 
     override fun visitIfExpression(ctx: RiddleParser.IfExpressionContext?): Any {
         val condition = visit(ctx!!.children[2])
+        //条件是否成立
         return if(condition == true)
             visit(ctx.children[4])
         else{
+            //是否有else语句
             if(ctx.childCount == 7)
                 visit(ctx.children[6])
             else Void()
         }
+    }
+
+    override fun visitWhile(ctx: RiddleParser.WhileContext?): Any {
+        //条件
+        val condition = ctx!!.children[2]
+        val statement = ctx.children[4]
+        if(statement.toString() == ";"){
+            return Void()
+        }
+        while(visit(condition)==true){
+            visit(statement)
+        }
+        return Void()
     }
 }
