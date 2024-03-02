@@ -6,9 +6,15 @@ Val : 'val' ;
 Fun : 'fun' ;
 If : 'if' ;
 Else : 'else' ;
+False : 'false' ;
+True : 'true' ;
 While : 'while' ;
-
-LineBreak : '\n' ;
+Print : 'print' ;
+Int : 'int' ;
+Float : 'float' ;
+Char : 'char' ;
+Boolen : 'bool' ;
+String : 'string' ;
 
 //符号
 LeftParen: '(';
@@ -156,8 +162,10 @@ fragment NODIGIT : [\u4e00-\u9fa5a-zA-Z_];
 // 空白字符，忽略
 Whitespace: [ \t]+ -> skip;
 
+NewLine: '\n' ;
 // 换行符，忽略
 Newline: ('\r' '\n'? | '\n') -> skip;
+
 
 // 块注释，忽略
 BlockComment: '/*' .*? '*/' -> skip;

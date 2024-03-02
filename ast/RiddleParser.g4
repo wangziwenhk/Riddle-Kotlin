@@ -3,44 +3,55 @@ options {
     tokenVocab = RiddleLexer;
 }
 program
-    : statment* EOF
+    : newline_statment* statment? EOF
+    ;
+
+newline_statment
+    : statment NewLine
+    | NewLine
     ;
 
 statment
-    : variableDefine LineBreak
-    | primaryExpression LineBreak
+    : variableDefine
+    | expression
     | block
     | funcDefine
     | while
+    | print
+    | statment Semi statment?
     | Semi
-    | LineBreak
+    ;
+
+//内置的外部输出控制，临时测试用
+print
+    : Print LeftParen expression RightParen
     ;
 
 //既是表达式也是语句
 primaryExpression
     : literal
     | idExpression
-    | assignExpression
+    | LeftParen expression RightParen
     | ifExpression
     ;
 
 
 variableDefine
-    : (Var | Val) (Identfier(Assign primaryExpression)?) (Comma (Identfier(Assign primaryExpression)?))*
+    : (Var | Val) (Identfier(Assign expression)?) (Comma (Identfier(Assign expression)?))*
     ;
 
 ifExpression
-    : If LeftParen primaryExpression RightParen statment
+    : If LeftParen expression RightParen statment
       (Else statment)?
     ;
 
 while
-    : While LeftParen primaryExpression RightParen statment
+    : While LeftParen expression RightParen statment
     ;
 
 //todo 完成funcDefine的传参处理
 funcDefine
-    : Fun Identfier LeftParen RightParen funcBody
+    : Fun Identfier LeftParen (Identfier Colon typeLiteral)* RightParen funcBody
     ;
 
 //这里funcBody还需要额外处理return
@@ -52,17 +63,40 @@ block
     : LeftBrace statment* RightBrace
     ;
 
+//表达式
 
-
-
+expression
+    : assignExpression
+    ;
 
 assignExpression
-    : Identfier Assign primaryExpression
+    : equalExpression
+    | Identfier Assign assignExpression
     ;
+
+equalExpression
+    : primaryExpression
+    | equalExpression Equal primaryExpression
+    ;
+
 
 idExpression
     : Identfier
     ;
+
+typeLiteral
+    : basicType
+    ;
+
+basicType
+    : Int
+    | Char
+    | Float
+    | Boolen
+    | String
+    ;
+
+
 
 //字面量
 literal
@@ -70,6 +104,7 @@ literal
     | strLiteral
     | charLiteral
     | floatLiteral
+    | boolenLiteral
     ;
 
 strLiteral
@@ -87,4 +122,9 @@ intLiteral
 
 floatLiteral
     : FloatLiteral
+    ;
+
+boolenLiteral
+    : True
+    | False
     ;

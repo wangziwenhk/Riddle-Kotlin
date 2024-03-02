@@ -4,6 +4,7 @@ package main.kotlin
 
 import gen.RiddleParser
 import gen.RiddleParserBaseVisitor
+import org.antlr.v4.runtime.tree.ErrorNode
 import kotlin.math.pow
 
 class Visitor : RiddleParserBaseVisitor<Any>() {
@@ -16,10 +17,11 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
     }
 
     override fun visitStatment(ctx: RiddleParser.StatmentContext?): Any? {
-        val result = super.visitStatment(ctx)
-//        ObjectManager.printAllObject()
-//        println()
-        return result
+        return super.visitStatment(ctx)
+    }
+
+    override fun visitNewline_statment(ctx: RiddleParser.Newline_statmentContext?): Any? {
+        return super.visitNewline_statment(ctx)
     }
 
     //整数判断
@@ -138,11 +140,16 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         if (index != -1) {
             val base = str.copyOfRange(0, index).joinToString("").toDouble()
             val k = str.copyOfRange(index + 1, str.size).joinToString("").toDouble()
-            ans = base*10.0.pow(k)
+            ans = base * 10.0.pow(k)
         } else {
             ans = str.joinToString("").toDouble()
         }
         return ans
+    }
+
+    override fun visitBoolenLiteral(ctx: RiddleParser.BoolenLiteralContext?): Any {
+        val value = ctx!!.children[0].toString()
+        return value == "true"
     }
 
     override fun visitIdExpression(ctx: RiddleParser.IdExpressionContext?): Any {
@@ -175,18 +182,12 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
                 i++
             }
         }
-        ObjectManager.printAllObject()
+        if (isDebug) {
+            ObjectManager.printAllObject()
+        }
         return Any()
     }
 
-    //赋值表达式
-    override fun visitAssignExpression(ctx: RiddleParser.AssignExpressionContext?): Any {
-        val name = ctx!!.children[0].toString()
-        val value = visit(ctx.children[2])
-
-        ObjectManager.setValue(name, value)
-        return 0
-    }
 
     override fun visitBlock(ctx: RiddleParser.BlockContext?): Any? {
         ObjectManager.inSpace()
@@ -198,11 +199,11 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
     override fun visitIfExpression(ctx: RiddleParser.IfExpressionContext?): Any {
         val condition = visit(ctx!!.children[2])
         //条件是否成立
-        return if(condition == true)
+        return if (condition == true)
             visit(ctx.children[4])
-        else{
+        else {
             //是否有else语句
-            if(ctx.childCount == 7)
+            if (ctx.childCount == 7)
                 visit(ctx.children[6])
             else Void()
         }
@@ -212,12 +213,41 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         //条件
         val condition = ctx!!.children[2]
         val statement = ctx.children[4]
-        if(statement.toString() == ";"){
+        if (statement.toString() == ";") {
             return Void()
         }
-        while(visit(condition)==true){
+        while (visit(condition) == true) {
             visit(statement)
         }
         return Void()
+    }
+
+    //临时调试用，不会加入正式版中
+    override fun visitPrint(ctx: RiddleParser.PrintContext?): Any {
+        val value = visit(ctx!!.children[2])
+        print(value)
+        return Void()
+    }
+
+    //赋值表达式
+    override fun visitAssignExpression(ctx: RiddleParser.AssignExpressionContext?): Any {
+        //判定是否为当前表达式
+        if (ctx!!.children.size == 1) return visitChildren(ctx)
+
+        val name = ctx.children[0].toString()
+        val value = visit(ctx.children[2])
+
+        ObjectManager.setValue(name, value)
+        return value
+    }
+
+    override fun visitEqualExpression(ctx: RiddleParser.EqualExpressionContext?): Any {
+        //判定是否为当前表达式
+        if (ctx!!.children.size == 1) return visitChildren(ctx)
+
+        val value1 = visit(ctx.children[0])
+        val value2 = visit(ctx.children[2])
+
+        return value1 == value2
     }
 }
