@@ -5,11 +5,17 @@ import gen.RiddleParser
 import org.antlr.v4.runtime.CharStreams
 import org.antlr.v4.runtime.CommonTokenStream
 import java.io.File
+import java.util.*
 
-var isDebug = false
+var isDebug = true
 
-fun main(){
-    val content = File("C:\\Users\\wangz\\IdeaProjects\\Riddle-Kotlin\\example.red").readText()
+fun main() {
+    val screen = Scanner(System.`in`)
+
+    val inputFilePath: String = if (isDebug) "C:\\Users\\wangz\\IdeaProjects\\Riddle-Kotlin\\example.red"
+    else screen.nextLine()
+
+    val content = File(inputFilePath).readText()
     val inputStream = CharStreams.fromString(content)
     val lexer = RiddleLexer(inputStream)
     val tokens = CommonTokenStream(lexer)

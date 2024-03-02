@@ -181,9 +181,7 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
                 i++
             }
         }
-        if (isDebug) {
-            ObjectManager.printAllObject()
-        }
+
         return Any()
     }
 
