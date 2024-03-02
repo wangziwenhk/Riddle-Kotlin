@@ -147,6 +147,46 @@ public interface RiddleParserListener extends ParseTreeListener {
 	 */
 	void exitEqualExpression(RiddleParser.EqualExpressionContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RiddleParser#notEqualExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterNotEqualExpression(RiddleParser.NotEqualExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#notEqualExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitNotEqualExpression(RiddleParser.NotEqualExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#greaterExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterGreaterExpression(RiddleParser.GreaterExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#greaterExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitGreaterExpression(RiddleParser.GreaterExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#lessExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessExpression(RiddleParser.LessExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#lessExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessExpression(RiddleParser.LessExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#lessEqualExpression}.
+	 * @param ctx the parse tree
+	 */
+	void enterLessEqualExpression(RiddleParser.LessEqualExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#lessEqualExpression}.
+	 * @param ctx the parse tree
+	 */
+	void exitLessEqualExpression(RiddleParser.LessEqualExpressionContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RiddleParser#idExpression}.
 	 * @param ctx the parse tree
 	 */
@@ -156,6 +196,26 @@ public interface RiddleParserListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitIdExpression(RiddleParser.IdExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#typeLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void enterTypeLiteral(RiddleParser.TypeLiteralContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#typeLiteral}.
+	 * @param ctx the parse tree
+	 */
+	void exitTypeLiteral(RiddleParser.TypeLiteralContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RiddleParser#basicType}.
+	 * @param ctx the parse tree
+	 */
+	void enterBasicType(RiddleParser.BasicTypeContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RiddleParser#basicType}.
+	 * @param ctx the parse tree
+	 */
+	void exitBasicType(RiddleParser.BasicTypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RiddleParser#literal}.
 	 * @param ctx the parse tree

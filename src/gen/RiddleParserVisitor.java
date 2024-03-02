@@ -94,11 +94,47 @@ public interface RiddleParserVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitEqualExpression(RiddleParser.EqualExpressionContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link RiddleParser#notEqualExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNotEqualExpression(RiddleParser.NotEqualExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#greaterExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitGreaterExpression(RiddleParser.GreaterExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#lessExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessExpression(RiddleParser.LessExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#lessEqualExpression}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitLessEqualExpression(RiddleParser.LessEqualExpressionContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link RiddleParser#idExpression}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
 	T visitIdExpression(RiddleParser.IdExpressionContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#typeLiteral}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitTypeLiteral(RiddleParser.TypeLiteralContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link RiddleParser#basicType}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitBasicType(RiddleParser.BasicTypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link RiddleParser#literal}.
 	 * @param ctx the parse tree

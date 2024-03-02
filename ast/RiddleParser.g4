@@ -64,21 +64,44 @@ block
     ;
 
 //表达式
-
 expression
     : assignExpression
     ;
 
+//赋值表达式
 assignExpression
     : equalExpression
     | Identfier Assign assignExpression
     ;
 
+//等于表达式
 equalExpression
-    : primaryExpression
-    | equalExpression Equal primaryExpression
+    : notEqualExpression
+    | <assoc = right> equalExpression Equal equalExpression
     ;
 
+notEqualExpression
+    : greaterExpression
+    | <assoc = right> notEqualExpression NotEqual notEqualExpression
+    ;
+
+//大于表达式
+greaterExpression
+    : lessExpression
+    | <assoc = right> greaterExpression Greater greaterExpression
+    ;
+
+//小于表达式
+lessExpression
+    : lessEqualExpression
+    | <assoc = right> lessExpression Less lessExpression
+    ;
+
+//小于等于表达式
+lessEqualExpression
+    : primaryExpression
+    | <assoc = right> lessEqualExpression LessEqual lessEqualExpression
+    ;
 
 idExpression
     : Identfier

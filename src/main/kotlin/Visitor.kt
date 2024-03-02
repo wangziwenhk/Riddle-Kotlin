@@ -4,7 +4,6 @@ package main.kotlin
 
 import gen.RiddleParser
 import gen.RiddleParserBaseVisitor
-import org.antlr.v4.runtime.tree.ErrorNode
 import kotlin.math.pow
 
 class Visitor : RiddleParserBaseVisitor<Any>() {
@@ -245,9 +244,24 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         //判定是否为当前表达式
         if (ctx!!.children.size == 1) return visitChildren(ctx)
 
-        val value1 = visit(ctx.children[0])
-        val value2 = visit(ctx.children[2])
+        val left = visit(ctx.children[0])
+        val right = visit(ctx.children[2])
 
-        return value1 == value2
+        return left == right
+    }
+
+    override fun visitBasicType(ctx: RiddleParser.BasicTypeContext?): Any {
+        return ctx!!.children[0].toString()
+    }
+
+    override fun visitLessExpression(ctx: RiddleParser.LessExpressionContext?): Any {
+        //判定是否为当前表达式
+        if(ctx!!.children.size==1)return visitChildren(ctx)
+
+        val left = visit(ctx.children[0])
+        val right = visit(ctx.children[2])
+
+        //这里得放一个运算符重载
+        throw ModuleNotImplemented("Method not implemented")
     }
 }
