@@ -256,10 +256,20 @@ class Visitor : RiddleParserBaseVisitor<Any>() {
         //判定是否为当前表达式
         if(ctx!!.children.size==1)return visitChildren(ctx)
 
-        val left = visit(ctx.children[0])
-        val right = visit(ctx.children[2])
-
+        val left = ObjectManager.toObject(visit(ctx.children[0]))
+        val right = ObjectManager.toObject(visit(ctx.children[2]))
         //这里得放一个运算符重载
-        throw ModuleNotImplemented("Method not implemented")
+        return ObjectManager.runMethod(left,"<",arrayListOf(left,right))
+    }
+
+    override fun visitGreaterExpression(ctx: RiddleParser.GreaterExpressionContext?): Any {
+        //判定是否为当前表达式
+        if(ctx!!.children.size==1)return visitChildren(ctx)
+
+        val left = ObjectManager.toObject(visit(ctx.children[0]))
+        val right = ObjectManager.toObject(visit(ctx.children[2]))
+        //这里得放一个运算符重载
+        return ObjectManager.runMethod(left,">",arrayListOf(left,right))
     }
 }
+val TheVisitor = Visitor()
